@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XAU/USD Daily Report - Saturday, May 16, 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 30px; text-align: center; }
+        .header h1 { font-size: 28px; margin-bottom: 8px; color: #daa520; }
+        .header .date { font-size: 14px; color: #888; }
+        .price-bar { display: flex; justify-content: center; align-items: center; gap: 30px; padding: 20px; background: #0f3460; color: #fff; }
+        .price-main { text-align: center; }
+        .price-label { font-size: 12px; text-transform: uppercase; color: #888; }
+        .price-value { font-size: 36px; font-weight: bold; color: #daa520; }
+        .price-change { font-size: 16px; }
+        .bullish { color: #22c55e; }
+        .bearish { color: #ef4444; }
+        .neutral { color: #eab308; }
+        .section { padding: 25px 30px; border-bottom: 1px solid #eee; }
+        .section h2 { font-size: 20px; color: #1a1a2e; margin-bottom: 15px; border-left: 4px solid #daa520; padding-left: 12px; }
+        .section h3 { font-size: 16px; color: #333; margin: 15px 0 10px; }
+        .section p { margin-bottom: 12px; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+        th { background: #1a1a2e; color: #daa520; padding: 10px 12px; text-align: left; font-weight: 600; }
+        td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+        tr:nth-child(even) { background: #f8f9fa; }
+        tr:hover { background: #f0f0f0; }
+        .level-box { display: inline-block; padding: 3px 10px; border-radius: 4px; font-weight: bold; font-size: 13px; }
+        .level-r { background: #fee; color: #c00; }
+        .level-s { background: #efe; color: #080; }
+        .level-p { background: #eef; color: #00c; }
+        .signal-box { display: inline-block; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 14px; }
+        .signal-strong-sell { background: #fee; color: #c00; }
+        .signal-sell { background: #ffe0e0; color: #d00; }
+        .signal-buy { background: #efe; color: #080; }
+        .signal-strong-buy { background: #dfd; color: #060; }
+        .signal-neutral { background: #ffe; color: #880; }
+        .highlight { background: #fff8e1; padding: 15px; border-left: 4px solid #daa520; margin: 15px 0; }
+        .warning { background: #fee; padding: 15px; border-left: 4px solid #c00; margin: 15px 0; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0; }
+        .info-card { background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        .info-card .label { font-size: 11px; text-transform: uppercase; color: #888; margin-bottom: 5px; }
+        .info-card .value { font-size: 18px; font-weight: bold; color: #1a1a2e; }
+        .trade-box { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 20px; border-radius: 8px; margin: 15px 0; }
+        .trade-box h4 { color: #daa520; margin-bottom: 10px; font-size: 16px; }
+        .trade-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 14px; }
+        .trade-label { color: #888; }
+        .trade-value { font-weight: bold; }
+        .footer { background: #1a1a2e; color: #888; padding: 20px; text-align: center; font-size: 12px; }
+        .footer a { color: #daa520; }
+        ul, ol { margin-left: 20px; margin-bottom: 12px; }
+        li { margin-bottom: 6px; font-size: 14px; }
+        .scenario { padding: 12px 15px; border-radius: 6px; margin: 10px 0; }
+        .scenario-bearish { background: #fee; border-left: 4px solid #c00; }
+        .scenario-bullish { background: #efe; border-left: 4px solid #080; }
+        .scenario-neutral { background: #f0f0f0; border-left: 4px solid #888; }
+        .scenario-title { font-weight: bold; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>XAU/USD Daily Trading Report</h1>
+            <div class="date">Saturday, May 16, 2026 | Prepared for Gorjan Ivanovski</div>
+        </div>
+
+        <!-- Price Bar -->
+        <div class="price-bar">
+            <div class="price-main">
+                <div class="price-label">XAU/USD</div>
+                <div class="price-value">$4540.00</div>
+                <div class="price-change bearish">
+                    -32.50 
+                    (-0.71%)
+                </div>
+            </div>
+            <div class="price-main">
+                <div class="price-label">From ATH</div>
+                <div class="price-value bearish">-19.6%</div>
+                <div class="price-change">ATH: $5646</div>
+            </div>
+            <div class="price-main">
+                <div class="price-label">Signal</div>
+                <div><span class="signal-box signal-sell">SELL</span></div>
+                <div class="price-change">RSI: 35.4 | ADX: 46.6</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="section">
+            <h2>Executive Summary</h2>
+            <div class="warning">
+                <strong>Primary Bias: BEARISH</strong> — Gold is testing critical $4,500 support amid extreme speculative positioning (86% retail long). 
+                Bearish trend intact below all key MAs. The $4,350-$4,400 zone (200-day SMA) represents the structural accumulation floor. 
+                <strong>Key catalyst this week:</strong> FOMC Minutes (Wed May 20, 2:00 PM ET) — expect $30-50 volatility.
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="label">Fed Funds Rate</div>
+                    <div class="value">3.50%-3.75%</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">DXY</div>
+                    <div class="value">99.27 <span class="bullish">(0.15%)</span></div>
+                </div>
+                <div class="info-card">
+                    <div class="label">10Y Treasury</div>
+                    <div class="value">4.46%</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">VIX</div>
+                    <div class="value">18.5</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">USD/JPY</div>
+                    <div class="value">159.00</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">Oil (WTI)</div>
+                    <div class="value">$103.67</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Macro Analysis -->
+        <div class="section">
+            <h2>Macro Analysis</h2>
+            
+            <h3>Federal Reserve Policy</h3>
+            <p>The Federal Reserve holds at <strong>3.50%-3.75%</strong> following a historic 4-way dissent at the April 29 FOMC meeting — the most divided committee since 1992. 
+            Incoming Chair Kevin Warsh (May 15) signals "radical system change" including potential balance sheet reduction, creating maximum policy uncertainty. 
+            CME FedWatch prices <strong>97.4% probability of no change</strong> at the June meeting.</p>
+
+            <h3>Inflation & Real Yields</h3>
+            <p>April CPI at <strong>3.8% YoY</strong> (3-year high, beat 3.6% consensus) with the Iran conflict adding an estimated 0.6-1.1pp to 2026 PCE inflation. 
+            Core PCE at 3.2% remains well above the Fed's 2% target. The 10-year TIPS real yield at <strong>1.99%</strong> is historically elevated, 
+            though the gold-real yield correlation has weakened to near zero as central bank demand overrides rate signals.</p>
+
+            <h3>US Dollar</h3>
+            <p>DXY at <strong>99.27</strong> faces critical <strong>100.50 resistance</strong> — a sustained break above would accelerate gold's correction. 
+            Consensus forecasts DXY weakening to 90-96 by Q4 2026, which would be a medium-term gold tailwind. CFTC positioning at 18th percentile suggests potential short-covering bounce risk.</p>
+        </div>
+
+        <!-- Technical Analysis -->
+        <div class="section">
+            <h2>Technical Analysis</h2>
+            
+            <h3>Trend & Momentum</h3>
+            <p>The 50-day SMA crossed below the 100-day SMA on May 11, generating a <strong>Bear Cross</strong>. 
+            The Three Black Crows pattern confirmed on the 4H chart signals decisive seller control. 
+            ADX at <strong>46.6</strong> confirms a very strong bearish trend — trend-following strategies are favored over mean-reversion.</p>
+
+            <table>
+                <tr>
+                    <th>Indicator</th>
+                    <th>Value</th>
+                    <th>Signal</th>
+                    <th>Assessment</th>
+                </tr>
+                <tr>
+                    <td>RSI (14)</td>
+                    <td>35.4</td>
+                    <td><span class="signal-box signal-sell">SELL</span></td>
+                    <td>Approaching oversold (30); room for more downside</td>
+                </tr>
+                <tr>
+                    <td>MACD</td>
+                    <td>-26.31</td>
+                    <td><span class="signal-box signal-strong-sell">SELL</span></td>
+                    <td>Deeply negative; histogram widening</td>
+                </tr>
+                <tr>
+                    <td>ADX (14)</td>
+                    <td>46.6</td>
+                    <td><span class="signal-box signal-neutral">STRONG TREND</span></td>
+                    <td>Trend-following favored; mean-reversion risky</td>
+                </tr>
+                <tr>
+                    <td>Composite</td>
+                    <td>—</td>
+                    <td><span class="signal-box signal-strong-sell">STRONG SELL</span></td>
+                    <td>20 of 22 indicators bearish</td>
+                </tr>
+            </table>
+
+            <h3>Key Levels for Today</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Level</th>
+                    <th>Price</th>
+                    <th>Significance</th>
+                </tr>
+                <tr>
+                    <td>Resistance</td>
+                    <td><span class="level-box level-r">R3</span></td>
+                    <td>$4785</td>
+                    <td>Pivot R3 / channel resistance</td>
+                </tr>
+                <tr>
+                    <td>Resistance</td>
+                    <td><span class="level-box level-r">R2</span></td>
+                    <td>$4725</td>
+                    <td>50-day SMA cluster</td>
+                </tr>
+                <tr>
+                    <td>Resistance</td>
+                    <td><span class="level-box level-r">R1</span></td>
+                    <td>$4633</td>
+                    <td>Short entry on rejection</td>
+                </tr>
+                <tr>
+                    <td>Pivot</td>
+                    <td><span class="level-box level-p">P</span></td>
+                    <td>$4557</td>
+                    <td>Session bias divider</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td><span class="level-box level-s">S1</span></td>
+                    <td>$4480</td>
+                    <td>Breakdown confirmation level</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td><span class="level-box level-s">—</span></td>
+                    <td>$4,500</td>
+                    <td>Psychological / last week's low</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td><span class="level-box level-s">S2</span></td>
+                    <td>$4420</td>
+                    <td>Structural support</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td><span class="level-box level-s">—</span></td>
+                    <td>$4359</td>
+                    <td>200-day SMA — ultimate bull floor</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td><span class="level-box level-s">—</span></td>
+                    <td>$4,300</td>
+                    <td>Bull/bear line (weekly close critical)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Sentiment -->
+        <div class="section">
+            <h2>Sentiment & Positioning</h2>
+            
+            <div class="warning">
+                <strong>Contrarian Warning:</strong> 86% of IG retail clients are LONG gold — one of the most extreme readings on record. 
+                Record small speculator positioning (+38,636 contracts) and complacent options pricing (GVZ 26.3) create asymmetric downside risk.
+            </div>
+
+            <h3>COT Positioning (May 12)</h3>
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Net Position</th>
+                    <th>Assessment</th>
+                </tr>
+                <tr>
+                    <td>Managed Money</td>
+                    <td>+98,015 contracts</td>
+                    <td>Elevated; below Jan peak</td>
+                </tr>
+                <tr>
+                    <td>Swap Dealers</td>
+                    <td style="color: #c00; font-weight: bold;">-190,056 contracts</td>
+                    <td>Record short — eventual cover fuel</td>
+                </tr>
+                <tr>
+                    <td>Small Speculators</td>
+                    <td style="color: #c00; font-weight: bold;">+38,636 contracts</td>
+                    <td>Record extreme — contrarian warning</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Speculative</strong></td>
+                    <td><strong>+210,258 contracts</strong></td>
+                    <td><strong>Crowded long — asymmetric downside risk</strong></td>
+                </tr>
+            </table>
+
+            <h3>ETF Flows</h3>
+            <p>Global gold ETF holdings at <strong>4,137 tonnes</strong> (near all-time record), with April inflows of <strong>+$6.6 billion</strong> 
+            reversing March's -$12.8 billion panic outflow. Asian inflows for 8 consecutive months provide structural support.</p>
+        </div>
+
+        <!-- Geopolitical -->
+        <div class="section">
+            <h2>Geopolitical & Event Risk</h2>
+            
+            <p><strong>US-Iran War:</strong> Ongoing since February 28; ceasefire on "life support" per Trump (May 11). Strait of Hormuz effectively closed, 
+            keeping oil elevated with ~$18/bbl war risk premium. The Dallas Fed estimates the conflict is adding 0.6-1.1pp to 2026 headline PCE inflation. 
+            Gold has shifted from a pure inflation hedge to a "credibility hedge" against policy uncertainty.</p>
+
+            <p><strong>US-China:</strong> Trump-Xi summit (May 14-15) produced modest progress; tariffs remain at 47.5-55%. Taiwan tensions escalating with PLA deployments.</p>
+
+            <h3>This Week's Key Events</h3>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Time (ET)</th>
+                    <th>Event</th>
+                    <th>Impact</th>
+                </tr>
+                <tr style="background: #fff8e1;">
+                    <td><strong>Wed May 20</strong></td>
+                    <td><strong>2:00 PM</strong></td>
+                    <td><strong>FOMC Minutes</strong></td>
+                    <td><strong>VERY HIGH — $30-50 expected move</strong></td>
+                </tr>
+                <tr>
+                    <td>Thu May 21</td>
+                    <td>8:30 AM</td>
+                    <td>Initial Jobless Claims</td>
+                    <td>HIGH — >230K bullish for gold</td>
+                </tr>
+                <tr>
+                    <td>Thu May 21</td>
+                    <td>9:45 AM</td>
+                    <td>S&P Global Manufacturing PMI</td>
+                    <td>HIGH — consensus 54.5 (>50 bearish gold)</td>
+                </tr>
+                <tr>
+                    <td>Fri May 22</td>
+                    <td>10:00 AM</td>
+                    <td>Michigan 1-Yr Inflation Expectations</td>
+                    <td>HIGH — re-acceleration = bearish gold</td>
+                </tr>
+            </table>
+            <div class="highlight">
+                <strong>Pre-FOMC Protocol:</strong> Be flat or reduced size by 1:30 PM ET on Wednesday. 
+                The initial 5-minute reaction reverses ~40% of the time; the move by 2:30 PM typically continues for 2-3 days.
+            </div>
+        </div>
+
+        <!-- Trade Plan -->
+        <div class="section">
+            <h2>Trade Plan & Strategy</h2>
+
+            <h3>Scenario Analysis</h3>
+            <div class="scenario scenario-bearish">
+                <div class="scenario-title">BEARISH (45% probability) — Primary Scenario</div>
+                <strong>Trigger:</strong> Close below $4,480<br>
+                <strong>Targets:</strong> $4,441 → $4,376 → $4,313 → $4,255 → $4,202<br>
+                <strong>Action:</strong> Short on break below $4,480 or fade rallies into $4,590-$4,610. Scale 50% at TP1, trail remainder.
+            </div>
+            <div class="scenario scenario-neutral">
+                <div class="scenario-title">CONSOLIDATION (40% probability)</div>
+                <strong>Trigger:</strong> Hold $4,500-$4,750 range<br>
+                <strong>Action:</strong> Session-based range trade. Mark Asian session H/L, fade London tests. Flat pre-FOMC.
+            </div>
+            <div class="scenario scenario-bullish">
+                <div class="scenario-title">BULLISH (15% probability)</div>
+                <strong>Trigger:</strong> H4 close above $4,645 with volume<br>
+                <strong>Targets:</strong> $4,698 → $4,760 → $4,821<br>
+                <strong>Action:</strong> Volume break + RSI >50 only. Reduce position size 30%.
+            </div>
+
+            <h3>Entry & Exit Levels</h3>
+            <div class="trade-box">
+                <h4>SHORT SETUP (Primary)</h4>
+                <div class="trade-row"><span class="trade-label">Entry:</span><span class="trade-value">Break below $4,480 OR fade $4,590-$4,610</span></div>
+                <div class="trade-row"><span class="trade-label">Stop Loss:</span><span class="trade-value" style="color: #ef4444;">$4,640</span></div>
+                <div class="trade-row"><span class="trade-label">TP1:</span><span class="trade-value" style="color: #22c55e;">$4,441</span></div>
+                <div class="trade-row"><span class="trade-label">TP2:</span><span class="trade-value" style="color: #22c55e;">$4,376 (200-day SMA)</span></div>
+                <div class="trade-row"><span class="trade-label">TP3:</span><span class="trade-value" style="color: #22c55e;">$4,313</span></div>
+                <div class="trade-row"><span class="trade-label">R/R:</span><span class="trade-value">1:2.5 to TP1, 1:5 to TP2</span></div>
+            </div>
+            <div class="trade-box">
+                <h4>LONG SETUP (Counter-Trend)</h4>
+                <div class="trade-row"><span class="trade-label">Entry:</span><span class="trade-value">Bounce from $4,500-$4,520 (bullish hammer/engulfing)</span></div>
+                <div class="trade-row"><span class="trade-label">Stop Loss:</span><span class="trade-value" style="color: #ef4444;">$4,480</span></div>
+                <div class="trade-row"><span class="trade-label">TP1:</span><span class="trade-value" style="color: #22c55e;">$4,590</span></div>
+                <div class="trade-row"><span class="trade-label">TP2:</span><span class="trade-value" style="color: #22c55e;">$4,645</span></div>
+                <div class="trade-row"><span class="trade-label">TP3:</span><span class="trade-value" style="color: #22c55e;">$4,698</span></div>
+                <div class="trade-row"><span class="trade-label">R/R:</span><span class="trade-value">1:2 to TP1. Reduce size 30%.</span></div>
+            </div>
+
+            <h3>Risk Management</h3>
+            <ul>
+                <li><strong>Position sizing:</strong> Risk 1-2% max per trade. Size backwards from stop distance using 14-day ATR (~$95).</li>
+                <li><strong>High volatility:</strong> Halve size when ATR >$30; quarter size when ATR >$40.</li>
+                <li><strong>FOMC protocol:</strong> Be flat by 1:30 PM ET Wednesday. Use limit orders; spreads can widen to $2-5+.</li>
+                <li><strong>Correlation exposure:</strong> All gold trades count as one correlated exposure — split 1% across scaled entries.</li>
+            </ul>
+
+            <h3>Cross-Market Watch</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="label">DXY Critical Level</div>
+                    <div class="value">100.50</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">VIX Safe-Haven</div>
+                    <div class="value">>25</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">10Y Yield Trigger</div>
+                    <div class="value"><4.20%</div>
+                </div>
+                <div class="info-card">
+                    <div class="label">Gold-Yield Correlation</div>
+                    <div class="value">Weakened (-0.80→0)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>This report is for informational purposes only and does not constitute investment advice.</p>
+            <p>Trading involves significant risk of loss. Past performance is not indicative of future results.</p>
+            <p>XAU/USD Daily Reporter | Generated at 2026-05-16 16:45:43 | <a href="#">Unsubscribe</a></p>
+        </div>
+    </div>
+</body>
+</html>

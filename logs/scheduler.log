@@ -1,0 +1,132 @@
+16:44:04 | INFO     | ==================================================
+16:44:04 | INFO     | XAU/USD Daily Reporter - Background Runner
+16:44:04 | INFO     | Schedule: 07:00 on working days
+16:44:04 | INFO     | Timezone: Europe/Skopje
+16:44:04 | INFO     | ==================================================
+16:44:04 | INFO     | Generating initial report...
+16:44:04 | INFO     | Running report generation...
+16:45:43 | INFO     | Report generated successfully
+12:53:44 | INFO     | ==================================================
+2026-05-18 12:53:44.174 | INFO     | __main__:main:106 - ==================================================
+12:53:44 | INFO     | XAU/USD Daily Reporter - Background Runner
+2026-05-18 12:53:44.201 | INFO     | __main__:main:107 - XAU/USD Daily Reporter - Background Runner
+12:53:44 | INFO     | Schedule: 07:00 on working days (Mon-Fri)
+2026-05-18 12:53:44.201 | INFO     | __main__:main:108 - Schedule: 07:00 on working days (Mon-Fri)
+12:53:44 | INFO     | Timezone: Europe/Skopje
+2026-05-18 12:53:44.201 | INFO     | __main__:main:109 - Timezone: Europe/Skopje
+12:53:44 | INFO     | ==================================================
+2026-05-18 12:53:44.201 | INFO     | __main__:main:110 - ==================================================
+12:53:44 | INFO     | Generating initial report...
+2026-05-18 12:53:44.202 | INFO     | __main__:main:113 - Generating initial report...
+12:53:45 | INFO     | Fetching market data...
+2026-05-18 12:53:45.384 | INFO     | __main__:generate_report_web:55 - Fetching market data...
+12:53:45 | INFO     | Fetching market data...
+2026-05-18 12:53:45.384 | INFO     | app.data_fetcher:fetch_all:21 - Fetching market data...
+12:53:48 | WARNING  | Attempt 1 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:53:48.136 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+12:53:50 | WARNING  | Attempt 2 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:53:50.782 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+12:53:53 | WARNING  | Attempt 3 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:53:53.456 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+12:53:55 | ERROR    | Failed to fetch GC=F after 3 attempts
+2026-05-18 12:53:55.456 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch GC=F after 3 attempts
+12:53:56 | WARNING  | Attempt 1 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:53:56.102 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+12:53:58 | WARNING  | Attempt 2 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:53:58.773 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+12:54:01 | WARNING  | Attempt 3 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:01.422 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for GC=F: Too Many Requests. Rate limited. Try after a while.
+12:54:03 | ERROR    | Failed to fetch GC=F after 3 attempts
+2026-05-18 12:54:03.422 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch GC=F after 3 attempts
+12:54:04 | WARNING  | Attempt 1 failed for DX-Y.NYB: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:04.096 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for DX-Y.NYB: Too Many Requests. Rate limited. Try after a while.
+12:54:06 | WARNING  | Attempt 2 failed for DX-Y.NYB: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:06.743 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for DX-Y.NYB: Too Many Requests. Rate limited. Try after a while.
+12:54:09 | WARNING  | Attempt 3 failed for DX-Y.NYB: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:09.422 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for DX-Y.NYB: Too Many Requests. Rate limited. Try after a while.
+12:54:11 | ERROR    | Failed to fetch DX-Y.NYB after 3 attempts
+2026-05-18 12:54:11.422 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch DX-Y.NYB after 3 attempts
+12:54:12 | WARNING  | Attempt 1 failed for ^TNX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:12.068 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for ^TNX: Too Many Requests. Rate limited. Try after a while.
+12:54:14 | WARNING  | Attempt 2 failed for ^TNX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:14.737 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for ^TNX: Too Many Requests. Rate limited. Try after a while.
+12:54:17 | WARNING  | Attempt 3 failed for ^TNX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:17.385 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for ^TNX: Too Many Requests. Rate limited. Try after a while.
+12:54:19 | ERROR    | Failed to fetch ^TNX after 3 attempts
+2026-05-18 12:54:19.385 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch ^TNX after 3 attempts
+12:54:20 | WARNING  | Attempt 1 failed for ^IRX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:20.058 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for ^IRX: Too Many Requests. Rate limited. Try after a while.
+12:54:22 | WARNING  | Attempt 2 failed for ^IRX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:22.704 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for ^IRX: Too Many Requests. Rate limited. Try after a while.
+12:54:25 | WARNING  | Attempt 3 failed for ^IRX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:25.374 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for ^IRX: Too Many Requests. Rate limited. Try after a while.
+12:54:27 | ERROR    | Failed to fetch ^IRX after 3 attempts
+2026-05-18 12:54:27.375 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch ^IRX after 3 attempts
+12:54:28 | WARNING  | Attempt 1 failed for ^VIX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:28.024 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for ^VIX: Too Many Requests. Rate limited. Try after a while.
+12:54:30 | WARNING  | Attempt 2 failed for ^VIX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:30.695 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for ^VIX: Too Many Requests. Rate limited. Try after a while.
+12:54:33 | WARNING  | Attempt 3 failed for ^VIX: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:33.343 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for ^VIX: Too Many Requests. Rate limited. Try after a while.
+12:54:35 | ERROR    | Failed to fetch ^VIX after 3 attempts
+2026-05-18 12:54:35.343 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch ^VIX after 3 attempts
+12:54:36 | WARNING  | Attempt 1 failed for SPY: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:36.015 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for SPY: Too Many Requests. Rate limited. Try after a while.
+12:54:38 | WARNING  | Attempt 2 failed for SPY: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:38.671 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for SPY: Too Many Requests. Rate limited. Try after a while.
+12:54:41 | WARNING  | Attempt 3 failed for SPY: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:41.345 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for SPY: Too Many Requests. Rate limited. Try after a while.
+12:54:43 | ERROR    | Failed to fetch SPY after 3 attempts
+2026-05-18 12:54:43.345 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch SPY after 3 attempts
+12:54:43 | WARNING  | Attempt 1 failed for USDJPY=X: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:43.992 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for USDJPY=X: Too Many Requests. Rate limited. Try after a while.
+12:54:46 | WARNING  | Attempt 2 failed for USDJPY=X: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:46.662 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for USDJPY=X: Too Many Requests. Rate limited. Try after a while.
+12:54:49 | WARNING  | Attempt 3 failed for USDJPY=X: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:49.309 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for USDJPY=X: Too Many Requests. Rate limited. Try after a while.
+12:54:51 | ERROR    | Failed to fetch USDJPY=X after 3 attempts
+2026-05-18 12:54:51.309 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch USDJPY=X after 3 attempts
+12:54:51 | WARNING  | Attempt 1 failed for EURUSD=X: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:51.981 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for EURUSD=X: Too Many Requests. Rate limited. Try after a while.
+12:54:54 | WARNING  | Attempt 2 failed for EURUSD=X: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:54.631 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for EURUSD=X: Too Many Requests. Rate limited. Try after a while.
+12:54:57 | WARNING  | Attempt 3 failed for EURUSD=X: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:57.303 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for EURUSD=X: Too Many Requests. Rate limited. Try after a while.
+12:54:59 | ERROR    | Failed to fetch EURUSD=X after 3 attempts
+2026-05-18 12:54:59.303 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch EURUSD=X after 3 attempts
+12:54:59 | WARNING  | Attempt 1 failed for CL=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:54:59.961 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for CL=F: Too Many Requests. Rate limited. Try after a while.
+12:55:02 | WARNING  | Attempt 2 failed for CL=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:02.634 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for CL=F: Too Many Requests. Rate limited. Try after a while.
+12:55:05 | WARNING  | Attempt 3 failed for CL=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:05.282 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for CL=F: Too Many Requests. Rate limited. Try after a while.
+12:55:07 | ERROR    | Failed to fetch CL=F after 3 attempts
+2026-05-18 12:55:07.282 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch CL=F after 3 attempts
+12:55:07 | WARNING  | Attempt 1 failed for SI=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:07.954 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for SI=F: Too Many Requests. Rate limited. Try after a while.
+12:55:10 | WARNING  | Attempt 2 failed for SI=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:10.604 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for SI=F: Too Many Requests. Rate limited. Try after a while.
+12:55:13 | WARNING  | Attempt 3 failed for SI=F: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:13.274 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for SI=F: Too Many Requests. Rate limited. Try after a while.
+12:55:15 | ERROR    | Failed to fetch SI=F after 3 attempts
+2026-05-18 12:55:15.274 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch SI=F after 3 attempts
+12:55:15 | WARNING  | Attempt 1 failed for GLD: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:15.923 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 1 failed for GLD: Too Many Requests. Rate limited. Try after a while.
+12:55:18 | WARNING  | Attempt 2 failed for GLD: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:18.593 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 2 failed for GLD: Too Many Requests. Rate limited. Try after a while.
+12:55:21 | WARNING  | Attempt 3 failed for GLD: Too Many Requests. Rate limited. Try after a while.
+2026-05-18 12:55:21.240 | WARNING  | app.data_fetcher:_fetch_ticker:63 - Attempt 3 failed for GLD: Too Many Requests. Rate limited. Try after a while.
+12:55:23 | ERROR    | Failed to fetch GLD after 3 attempts
+2026-05-18 12:55:23.241 | ERROR    | app.data_fetcher:_fetch_ticker:65 - Failed to fetch GLD after 3 attempts
+12:55:23 | WARNING  | No gold data to calculate indicators
+2026-05-18 12:55:23.241 | WARNING  | app.data_fetcher:_calculate_indicators:72 - No gold data to calculate indicators
+12:55:23 | WARNING  | Live data unavailable (rate limit), using research fallback...
+2026-05-18 12:55:23.241 | WARNING  | __main__:generate_report_web:61 - Live data unavailable (rate limit), using research fallback...
+12:55:23 | INFO     | Generating HTML report...
+2026-05-18 12:55:23.242 | INFO     | __main__:generate_report_web:73 - Generating HTML report...
+12:55:23 | INFO     | Generating HTML report...
+2026-05-18 12:55:23.242 | INFO     | app.report_generator:generate:444 - Generating HTML report...
+12:55:23 | INFO     | HTML report generated successfully
+2026-05-18 12:55:23.260 | INFO     | app.report_generator:generate:504 - HTML report generated successfully
+12:55:23 | INFO     | Report saved: /mnt/agents/output/xauusd-reporter/web/index.html
+2026-05-18 12:55:23.272 | INFO     | __main__:generate_report_web:96 - Report saved: /mnt/agents/output/xauusd-reporter/web/index.html

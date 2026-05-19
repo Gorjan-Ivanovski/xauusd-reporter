@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  xauusd-reporter:
+    build: .
+    container_name: xauusd-daily-reporter
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - TZ=Europe/Skopje
+    # Override command to run scheduler
+    command: ["python", "-m", "app.main", "schedule"]

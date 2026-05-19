@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+startCommand = "python -m app.server"
+restartPolicyType = "ALWAYS"
+healthcheckPath = "/api/status"
+healthcheckTimeout = 30
