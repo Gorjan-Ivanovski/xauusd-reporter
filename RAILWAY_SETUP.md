@@ -50,7 +50,7 @@ This URL works 24/7 with live prices updating every 5 minutes during market hour
 
 | Feature | Status |
 |---------|--------|
-| Live price updates | ✅ Every 5 min during market hours |
+| Live price updates | ✅ Once per hour during market hours |
 | Web dashboard | ✅ Served directly from container |
 | API endpoint | ✅ `/api/price` returns JSON |
 | Auto-restart | ✅ Always-on |

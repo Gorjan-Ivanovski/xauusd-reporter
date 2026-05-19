@@ -22,7 +22,7 @@
 5. Your URL will be: `https://xauusd-reporter.up.railway.app`
 
 ### 3. Bookmark Your Live Dashboard
-The dashboard updates **every 5 minutes** during market hours (8 AM - 6 PM AEST, Mon-Fri).
+The dashboard updates **once per hour** during market hours (8 AM - 6 PM AEST, Mon-Fri).
 
 ---
 
@@ -41,7 +41,7 @@ The dashboard updates **every 5 minutes** during market hours (8 AM - 6 PM AEST,
 
 ## Data Source: TwelveData
 
-- **Free tier:** 800 API calls/day (enough for 5-min updates 12 hours/day)
+- **Free tier:** 800 API calls/day (polling once per hour = ~84 calls/day)
 - **Symbol:** XAU/USD
 - **Latency:** Real-time
 - **AEST timestamps:** All times shown in Australia/Sydney timezone

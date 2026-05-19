@@ -63,31 +63,32 @@ def generate_and_save():
 
 
 def background_updater():
-    """Update data every 5 minutes during AEST market hours."""
+    """Update data once per hour (60 min) — TwelveData API limit."""
     logger.info("Background updater started (AEST timezone)")
     generate_and_save()  # Initial update
     
-    last_minute = None
+    last_hour = None
     
     while True:
         try:
             now = datetime.now(AEST)
+            hour = now.hour
             minute = now.minute
             
-            # Every 5 minutes during market hours (Mon-Fri 8-18 AEST)
-            if now.weekday() < 5 and 8 <= now.hour <= 18:
-                if minute % 5 == 0 and minute != last_minute:
-                    logger.info(f"Market hours update at {now.strftime('%H:%M')} AEST")
+            # Update once per hour at :00 during market hours (Mon-Fri 8-18 AEST)
+            if now.weekday() < 5 and 8 <= hour <= 18:
+                if minute == 0 and hour != last_hour:
+                    logger.info(f"Hourly update at {now.strftime('%H:%M')} AEST")
                     generate_and_save()
-                    last_minute = minute
+                    last_hour = hour
             else:
-                # Off-hours: update once per hour
-                if now.minute == 0 and last_minute != 0:
+                # Off-hours: still update once per hour
+                if minute == 0 and hour != last_hour:
                     logger.info(f"Off-hours update at {now.strftime('%H:%M')} AEST")
                     generate_and_save()
-                    last_minute = 0
+                    last_hour = hour
             
-            time.sleep(30)
+            time.sleep(60)  # Check every minute
         except Exception as e:
             logger.error(f"Updater error: {e}")
             time.sleep(60)
