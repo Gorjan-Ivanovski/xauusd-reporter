@@ -434,7 +434,7 @@ HTML_TEMPLATE = """
         <div class="footer">
             <p>This report is for informational purposes only and does not constitute investment advice.</p>
             <p>Trading involves significant risk of loss. Past performance is not indicative of future results.</p>
-            <p>XAU/USD Daily Reporter | Last Updated: {{ timestamp }} AEST | Auto-refreshes: Hourly | Source: twelvedata.com | <a href="#">Unsubscribe</a></p>
+            <p>XAU/USD Daily Reporter | Last Updated: {{ timestamp }} AEST | Auto-refreshes: Hourly | Source: {{ data_source }} | <a href="#">Unsubscribe</a></p>
         </div>
     </div>
 </body>

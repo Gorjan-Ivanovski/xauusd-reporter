@@ -5,34 +5,46 @@ from datetime import datetime
 from typing import Dict, Optional
 from loguru import logger
 
-API_KEY = os.getenv('TWELVEDATA_API_KEY', '')
 BASE_URL = "https://api.twelvedata.com"
+
+
+def get_api_key() -> str:
+    """Read API key fresh from environment each time."""
+    return os.getenv('TWELVEDATA_API_KEY', '').strip()
 
 
 def fetch_gold_usd() -> Optional[Dict]:
     """Fetch live XAU/USD price from TwelveData."""
-    if not API_KEY:
-        logger.warning("TWELVEDATA_API_KEY not set")
+    api_key = get_api_key()
+    
+    if not api_key:
+        logger.error("TWELVEDATA_API_KEY is not set! Add it as an environment variable.")
         return None
     
+    logger.info(f"Using TwelveData API key: {api_key[:8]}...")
+    
     try:
-        # Quote endpoint for XAU/USD
         url = f"{BASE_URL}/quote"
         params = {
             "symbol": "XAU/USD",
-            "apikey": API_KEY,
+            "apikey": api_key,
         }
+        logger.info(f"Requesting: {url}?symbol=XAU/USD")
         r = requests.get(url, params=params, timeout=15)
+        
+        logger.info(f"TwelveData response status: {r.status_code}")
         
         if r.status_code == 200:
             data = r.json()
+            logger.info(f"TwelveData raw response: {str(data)[:300]}")
+            
             if 'price' in data:
                 price = float(data['price'])
-                prev_close = float(data.get('previous_close', price))
+                prev_close = float(data.get('previous_close', data.get('close', price)))
                 change = price - prev_close
                 change_pct = (change / prev_close) * 100 if prev_close else 0
                 
-                return {
+                result = {
                     'current_price': price,
                     'daily_change': change,
                     'daily_change_pct': change_pct,
@@ -46,20 +58,25 @@ def fetch_gold_usd() -> Optional[Dict]:
                     'source': 'twelvedata.com',
                     'symbol': 'XAU/USD',
                 }
+                logger.info(f"SUCCESS: Live gold ${price:.2f} (chg: {change:+.2f})")
+                return result
+            elif 'code' in data and data.get('status') == 'error':
+                logger.error(f"TwelveData API error: {data.get('message', data)}")
+                return None
             else:
-                logger.warning(f"TwelveData response missing price: {data}")
+                logger.warning(f"TwelveData response missing 'price' field. Keys: {list(data.keys())}")
                 return None
         else:
-            logger.warning(f"TwelveData returned {r.status_code}: {r.text[:200]}")
+            logger.error(f"TwelveData HTTP {r.status_code}: {r.text[:300]}")
             return None
     except Exception as e:
-        logger.warning(f"TwelveData fetch error: {e}")
+        logger.error(f"TwelveData fetch exception: {e}")
         return None
 
 
 def fetch_all_live() -> Dict:
     """Fetch all live data from TwelveData + fallbacks."""
-    logger.info("Fetching live data from TwelveData...")
+    logger.info("=== FETCHING LIVE DATA ===")
     
     indicators = {}
     
@@ -71,7 +88,7 @@ def fetch_all_live() -> Dict:
         indicators['ath'] = 5645.60
         indicators['pct_from_ath'] = ((price / 5645.60) - 1) * 100
         
-        # Approximate levels from live data
+        # Calculate levels from live data
         high = gold.get('high', price * 1.005)
         low = gold.get('low', price * 0.995)
         prev = gold.get('prev_close', price)
@@ -86,9 +103,9 @@ def fetch_all_live() -> Dict:
         indicators['s3'] = indicators['s2'] - (high - low)
         indicators['atr_14'] = high - low
         
-        logger.info(f"Live gold: ${price:.2f} ({gold['daily_change']:+.2f}, {gold['daily_change_pct']:+.2f}%)")
+        logger.info(f"LIVE DATA: ${price:.2f} | source: twelvedata.com")
     else:
-        logger.warning("TwelveData failed, using fallback data")
+        logger.error("TWELVEDATA FAILED — using FALLBACK data (price will be stale!)")
         indicators = get_fallback_data()
     
     # Static/research-based indicators (TwelveData free tier doesn't provide these)
@@ -107,7 +124,8 @@ def fetch_all_live() -> Dict:
 
 
 def get_fallback_data() -> Dict:
-    """Return research-based fallback data."""
+    """Return research-based fallback data — STALE, only used when API fails."""
+    logger.warning("RETURNING FALLBACK DATA — price is NOT live!")
     return {
         'current_price': 4540.00,
         'daily_change': -32.50,

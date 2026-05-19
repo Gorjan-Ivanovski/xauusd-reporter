@@ -43,9 +43,11 @@ def generate_and_save():
         now_utc = datetime.now(pytz.utc)
         html = html.replace('Saturday, May 16, 2026', now_aest.strftime('%A, %B %d, %Y'))
         
-        # Add visible AEST timestamp
+        # Add visible AEST timestamp with LIVE or FALLBACK indicator
+        source = indicators.get('source', 'unknown')
+        source_label = "LIVE" if source == 'twelvedata.com' else f"FALLBACK ({source})"
         old_footer = 'XAU/USD Daily Reporter | Auto-refreshes every hour'
-        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | Source: twelvedata.com'
+        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | {source_label} | Source: {source}'
         html = html.replace(old_footer, new_footer)
         
         os.makedirs(WEB_DIR, exist_ok=True)
@@ -116,11 +118,16 @@ def api_price():
 
 @app.route('/api/status')
 def api_status():
-    """Health check."""
+    """Health check with API key status."""
+    from app.twelvedata_fetcher import get_api_key
+    key = get_api_key()
     return jsonify({
         'status': 'ok',
         'price': latest_indicators.get('current_price'),
+        'source': latest_indicators.get('source', 'unknown'),
         'last_update': last_update,
+        'api_key_set': bool(key),
+        'api_key_preview': key[:8] + '...' if key else 'NOT SET',
     })
 
 
