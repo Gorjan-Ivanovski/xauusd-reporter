@@ -89,7 +89,7 @@ HTML_TEMPLATE = """
                     ({{ "+%.2f"|format(change_pct) if change_pct >= 0 else "%.2f"|format(change_pct) }}%)
                 </div>
                 <div style="font-size: 11px; color: #888; margin-top: 4px;">
-                    Updated: {{ aest_time }} AEST | Source: {{ data_source }}
+                    Updated: {{ aest_time }} AEST | Source: twelvedata.com
                 </div>
             </div>
             <div class="price-main">
@@ -434,7 +434,7 @@ HTML_TEMPLATE = """
         <div class="footer">
             <p>This report is for informational purposes only and does not constitute investment advice.</p>
             <p>Trading involves significant risk of loss. Past performance is not indicative of future results.</p>
-            <p>XAU/USD Daily Reporter | Last Updated: {{ timestamp }} AEST | Auto-refreshes: Hourly | Source: {{ data_source }} | <a href="#">Unsubscribe</a></p>
+            <p>XAU/USD Daily Reporter | Last Updated: {{ timestamp }} AEST | Auto-refreshes: Hourly | Source: twelvedata.com | <a href="#">Unsubscribe</a></p>
         </div>
     </div>
 </body>

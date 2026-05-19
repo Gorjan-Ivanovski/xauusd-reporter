@@ -13,8 +13,9 @@ APP_DIR = BASE_DIR / 'app'
 LOG_DIR = BASE_DIR / 'logs'
 
 # Email settings
-# Gold API
-GOLDAPI_KEY = os.getenv('GOLDAPI_KEY', 'goldapi-9d90dfd0fb5478f8719751976d3d84a6-io')
+# TwelveData API (free tier: 800 calls/day)
+# Sign up: https://twelvedata.com/pricing
+TWELVEDATA_API_KEY = os.getenv('TWELVEDATA_API_KEY', '')
 
 # Email provider priority: SendGrid > SMTP
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', '')

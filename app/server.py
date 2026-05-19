@@ -12,7 +12,7 @@ import pytz
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
 
-from app.goldapi_fetcher import fetch_all_live
+from app.twelvedata_fetcher import fetch_all_live
 from app.report_generator import ReportGenerator
 
 # AEST timezone
@@ -31,7 +31,7 @@ def generate_and_save():
     global latest_indicators, last_update
     
     try:
-        logger.info("Fetching live GoldAPI data...")
+        logger.info("Fetching live data from TwelveData...")
         indicators = fetch_all_live()
         price = indicators.get('current_price', 0)
         
@@ -45,7 +45,7 @@ def generate_and_save():
         
         # Add visible AEST timestamp
         old_footer = 'XAU/USD Daily Reporter | Auto-refreshes every hour'
-        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | Source: GoldAPI.io'
+        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | Source: twelvedata.com'
         html = html.replace(old_footer, new_footer)
         
         os.makedirs(WEB_DIR, exist_ok=True)
@@ -80,6 +80,12 @@ def background_updater():
                     logger.info(f"Market hours update at {now.strftime('%H:%M')} AEST")
                     generate_and_save()
                     last_minute = minute
+            else:
+                # Off-hours: update once per hour
+                if now.minute == 0 and last_minute != 0:
+                    logger.info(f"Off-hours update at {now.strftime('%H:%M')} AEST")
+                    generate_and_save()
+                    last_minute = 0
             
             time.sleep(30)
         except Exception as e:
