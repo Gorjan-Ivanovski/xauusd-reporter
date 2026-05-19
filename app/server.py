@@ -6,6 +6,7 @@ import os
 import sys
 from datetime import datetime
 from loguru import logger
+import pytz
 
 # Setup paths
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,6 +14,9 @@ sys.path.insert(0, PROJECT_ROOT)
 
 from app.goldapi_fetcher import fetch_all_live
 from app.report_generator import ReportGenerator
+
+# AEST timezone
+AEST = pytz.timezone('Australia/Sydney')
 
 app = Flask(__name__)
 WEB_DIR = os.path.join(PROJECT_ROOT, 'web')
@@ -23,7 +27,7 @@ last_update = "Never"
 
 
 def generate_and_save():
-    """Fetch live data and regenerate HTML."""
+    """Fetch live data and regenerate HTML with AEST timestamps."""
     global latest_indicators, last_update
     
     try:
@@ -34,12 +38,14 @@ def generate_and_save():
         generator = ReportGenerator()
         html = generator.generate(indicators, {})
         
-        now = datetime.now()
-        html = html.replace('Saturday, May 16, 2026', now.strftime('%A, %B %d, %Y'))
+        # Use AEST for all timestamps
+        now_aest = datetime.now(AEST)
+        now_utc = datetime.now(pytz.utc)
+        html = html.replace('Saturday, May 16, 2026', now_aest.strftime('%A, %B %d, %Y'))
         
-        # Add visible timestamp
+        # Add visible AEST timestamp
         old_footer = 'XAU/USD Daily Reporter | Auto-refreshes every hour'
-        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now.strftime("%H:%M")} UTC | Source: GoldAPI.io'
+        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | Source: GoldAPI.io'
         html = html.replace(old_footer, new_footer)
         
         os.makedirs(WEB_DIR, exist_ok=True)
@@ -47,7 +53,7 @@ def generate_and_save():
             f.write(html)
         
         latest_indicators = indicators
-        last_update = now.strftime('%Y-%m-%d %H:%M:%S UTC')
+        last_update = now_aest.strftime('%Y-%m-%d %H:%M:%S AEST')
         
         logger.info(f"Updated: ${price:.2f} at {last_update}")
         return True
@@ -57,21 +63,21 @@ def generate_and_save():
 
 
 def background_updater():
-    """Update data every 5 minutes during market hours."""
-    logger.info("Background updater started")
+    """Update data every 5 minutes during AEST market hours."""
+    logger.info("Background updater started (AEST timezone)")
     generate_and_save()  # Initial update
     
     last_minute = None
     
     while True:
         try:
-            now = datetime.now()
+            now = datetime.now(AEST)
             minute = now.minute
             
-            # Every 5 minutes during market hours (Mon-Fri 8-18)
+            # Every 5 minutes during market hours (Mon-Fri 8-18 AEST)
             if now.weekday() < 5 and 8 <= now.hour <= 18:
                 if minute % 5 == 0 and minute != last_minute:
-                    logger.info(f"Market hours update at {now.strftime('%H:%M')}")
+                    logger.info(f"Market hours update at {now.strftime('%H:%M')} AEST")
                     generate_and_save()
                     last_minute = minute
             

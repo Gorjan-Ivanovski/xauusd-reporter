@@ -3,6 +3,9 @@ from datetime import datetime
 from typing import Dict
 from jinja2 import Template
 from loguru import logger
+import pytz
+
+AEST = pytz.timezone('Australia/Sydney')
 
 
 HTML_TEMPLATE = """
@@ -86,7 +89,7 @@ HTML_TEMPLATE = """
                     ({{ "+%.2f"|format(change_pct) if change_pct >= 0 else "%.2f"|format(change_pct) }}%)
                 </div>
                 <div style="font-size: 11px; color: #888; margin-top: 4px;">
-                    Updated: {{ timestamp.split(' ')[1][:5] }} UTC | Source: {{ data_source }}
+                    Updated: {{ aest_time }} AEST | Source: {{ data_source }}
                 </div>
             </div>
             <div class="price-main">
@@ -431,7 +434,7 @@ HTML_TEMPLATE = """
         <div class="footer">
             <p>This report is for informational purposes only and does not constitute investment advice.</p>
             <p>Trading involves significant risk of loss. Past performance is not indicative of future results.</p>
-            <p>XAU/USD Daily Reporter | Last Updated: {{ timestamp }} UTC | Auto-refreshes: Hourly | Source: {{ data_source }} | <a href="#">Unsubscribe</a></p>
+            <p>XAU/USD Daily Reporter | Last Updated: {{ timestamp }} AEST | Auto-refreshes: Hourly | Source: {{ data_source }} | <a href="#">Unsubscribe</a></p>
         </div>
     </div>
 </body>
@@ -473,9 +476,11 @@ class ReportGenerator:
             signal_class = "neutral"
             bias = "NEUTRAL"
 
+        now_aest = datetime.now(AEST)
         html = template.render(
-            date=datetime.now().strftime('%A, %B %d, %Y'),
-            timestamp=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            date=now_aest.strftime('%A, %B %d, %Y'),
+            timestamp=now_aest.strftime('%Y-%m-%d %H:%M:%S'),
+            aest_time=now_aest.strftime('%H:%M'),
             price=indicators.get('current_price', 0),
             change=indicators.get('daily_change', 0),
             change_pct=indicators.get('daily_change_pct', 0),
