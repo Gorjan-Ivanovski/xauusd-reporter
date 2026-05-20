@@ -479,8 +479,8 @@ class ReportGenerator:
         now_aest = datetime.now(AEST)
         html = template.render(
             date=now_aest.strftime('%A, %B %d, %Y'),
-            timestamp=now_aest.strftime('%Y-%m-%d %H:%M:%S'),
-            aest_time=now_aest.strftime('%H:%M'),
+            timestamp=now_aest.strftime('%a %d %b %H:%M:%S'),
+            aest_time=now_aest.strftime('%a %d %b %H:%M'),
             price=indicators.get('current_price', 0),
             change=indicators.get('daily_change', 0),
             change_pct=indicators.get('daily_change_pct', 0),

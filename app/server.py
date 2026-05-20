@@ -26,6 +26,30 @@ latest_indicators = {}
 last_update = "Never"
 
 
+def generate_error_page(reason: str) -> str:
+    """Generate an error page when price data is unavailable."""
+    now_aest = datetime.now(AEST)
+    return f"""<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>XAU/USD - Error</title>
+<style>
+body {{ font-family: Arial, sans-serif; background: #1a1a2e; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }}
+.container {{ text-align: center; max-width: 600px; padding: 40px; }}
+h1 {{ color: #daa520; font-size: 48px; margin-bottom: 10px; }} 
+.error {{ color: #ef4444; font-size: 24px; margin: 20px 0; }}
+.reason {{ color: #888; font-size: 16px; margin: 15px 0; }}
+.timestamp {{ color: #555; font-size: 14px; margin-top: 30px; }}
+.retry {{ color: #22c55e; font-size: 14px; margin-top: 15px; }}
+</style></head>
+<body>
+<div class="container">
+<h1>XAU/USD</h1>
+<div class="error">⚠ Price Unavailable</div>
+<div class="reason">{reason}</div>
+<div class="timestamp">{now_aest.strftime('%a %d %b %H:%M')} AEST</div>
+<div class="retry">Retrying in 60 minutes...</div>
+</div></body></html>"""
+
+
 def generate_and_save():
     """Fetch live data and regenerate HTML with AEST timestamps."""
     global latest_indicators, last_update
@@ -34,20 +58,37 @@ def generate_and_save():
         logger.info("Fetching live data from TwelveData...")
         indicators = fetch_all_live()
         price = indicators.get('current_price', 0)
+        source = indicators.get('source', 'unknown')
+        
+        # Use AEST for all timestamps - now WITH date
+        now_aest = datetime.now(AEST)
+        now_utc = datetime.now(pytz.utc)
+        
+        # If data is from fallback, show error page instead of stale price
+        if source == 'fallback':
+            logger.error("Data source is FALLBACK — showing error page")
+            html = generate_error_page(
+                "Live price data unavailable. The TwelveData API may be down or the API key is invalid/expired."
+            )
+            os.makedirs(WEB_DIR, exist_ok=True)
+            with open(os.path.join(WEB_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+                f.write(html)
+            last_update = now_aest.strftime('%Y-%m-%d %H:%M:%S AEST')
+            logger.info(f"Error page saved at {last_update}")
+            return False
+        
+        # LIVE data — recalculate technical levels from live price
+        indicators = recalculate_analysis(indicators)
         
         generator = ReportGenerator()
         html = generator.generate(indicators, {})
         
-        # Use AEST for all timestamps
-        now_aest = datetime.now(AEST)
-        now_utc = datetime.now(pytz.utc)
+        # Update date with AEST
         html = html.replace('Saturday, May 16, 2026', now_aest.strftime('%A, %B %d, %Y'))
         
-        # Add visible AEST timestamp with LIVE or FALLBACK indicator
-        source = indicators.get('source', 'unknown')
-        source_label = "LIVE" if source == 'twelvedata.com' else f"FALLBACK ({source})"
+        # Add visible AEST timestamp WITH date
         old_footer = 'XAU/USD Daily Reporter | Auto-refreshes every hour'
-        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | {source_label} | Source: {source}'
+        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%a %d %b %H:%M")} AEST ({now_utc.strftime("%H:%M")} UTC) | LIVE | Source: twelvedata.com'
         html = html.replace(old_footer, new_footer)
         
         os.makedirs(WEB_DIR, exist_ok=True)
@@ -61,7 +102,45 @@ def generate_and_save():
         return True
     except Exception as e:
         logger.error(f"Update error: {e}")
+        # Even on error, show error page
+        try:
+            html = generate_error_page(f"Server error: {str(e)}")
+            with open(os.path.join(WEB_DIR, 'index.html'), 'w', encoding='utf-8') as f:
+                f.write(html)
+        except:
+            pass
         return False
+
+
+def recalculate_analysis(indicators: dict) -> dict:
+    """Recalculate technical levels from live price data on every refresh."""
+    price = indicators.get('current_price', 0)
+    high = indicators.get('high', price)
+    low = indicators.get('low', price)
+    prev = indicators.get('prev_close', price)
+    
+    # Recalculate pivot and S/R from live data
+    pivot = (high + low + prev) / 3
+    atr = high - low if high and low else price * 0.01
+    
+    indicators['pivot'] = pivot
+    indicators['r1'] = 2 * pivot - low
+    indicators['r2'] = pivot + (high - low)
+    indicators['r3'] = indicators['r2'] + atr * 0.5
+    indicators['s1'] = 2 * pivot - high
+    indicators['s2'] = pivot - (high - low)
+    indicators['s3'] = indicators['s2'] - atr * 0.5
+    indicators['atr_14'] = atr
+    
+    # Recalculate trend bias from price position relative to SMA
+    sma_200 = indicators.get('sma_200', 4359)
+    indicators['trend_bias'] = 'BULLISH' if price > sma_200 else 'BEARISH'
+    
+    # Update distance from ATH
+    indicators['pct_from_ath'] = ((price / 5645.60) - 1) * 100
+    
+    logger.info(f"Recalculated levels: pivot=${pivot:.0f}, trend={indicators['trend_bias']}")
+    return indicators
 
 
 def background_updater():
@@ -108,10 +187,18 @@ def dashboard():
 @app.route('/api/price')
 def api_price():
     """Current price as JSON."""
+    source = latest_indicators.get('source', 'unknown')
+    if source == 'fallback':
+        return jsonify({
+            'error': 'Price unavailable - API data not live',
+            'source': source,
+            'last_update': last_update,
+        }), 503
     return jsonify({
         'price': latest_indicators.get('current_price'),
         'change': latest_indicators.get('daily_change'),
         'change_pct': latest_indicators.get('daily_change_pct'),
+        'source': source,
         'last_update': last_update,
     })
 
@@ -121,10 +208,11 @@ def api_status():
     """Health check with API key status."""
     from app.twelvedata_fetcher import get_api_key
     key = get_api_key()
+    source = latest_indicators.get('source', 'unknown')
     return jsonify({
-        'status': 'ok',
+        'status': 'ok' if source == 'twelvedata.com' else 'error',
         'price': latest_indicators.get('current_price'),
-        'source': latest_indicators.get('source', 'unknown'),
+        'source': source,
         'last_update': last_update,
         'api_key_set': bool(key),
         'api_key_preview': key[:8] + '...' if key else 'NOT SET',
@@ -135,7 +223,12 @@ def api_status():
 def trigger_update():
     """Force a data refresh."""
     success = generate_and_save()
-    return jsonify({'success': success, 'price': latest_indicators.get('current_price'), 'last_update': last_update})
+    return jsonify({
+        'success': success,
+        'price': latest_indicators.get('current_price'),
+        'source': latest_indicators.get('source', 'unknown'),
+        'last_update': last_update,
+    })
 
 
 def start():
