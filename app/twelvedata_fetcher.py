@@ -36,21 +36,46 @@ def fetch_gold_usd() -> Optional[Dict]:
         
         if r.status_code == 200:
             data = r.json()
-            logger.info(f"TwelveData raw response: {str(data)[:300]}")
+            logger.info(f"TwelveData raw response keys: {list(data.keys())}")
+            logger.info(f"TwelveData raw response: {str(data)[:500]}")
             
-            if 'price' in data:
-                price = float(data['price'])
-                prev_close = float(data.get('previous_close', data.get('close', price)))
-                change = price - prev_close
-                change_pct = (change / prev_close) * 100 if prev_close else 0
+            # Check for errors first
+            if data.get('status') == 'error':
+                logger.error(f"TwelveData API error: {data.get('message', data)}")
+                return None
+            
+            # TwelveData uses 'close' not 'price' for the current price
+            # Also 'change' and 'percent_change' instead of 'ch'/'chp'
+            price_field = None
+            for field in ['close', 'price', 'previous_close']:
+                if field in data and data[field] is not None:
+                    price_field = field
+                    break
+            
+            if price_field:
+                price = float(data[price_field])
+                logger.info(f"Found price in field '{price_field}': ${price:.2f}")
+                
+                prev_close = float(data.get('previous_close', price))
+                
+                # TwelveData may return 'change' and 'percent_change' directly
+                if 'change' in data and data['change'] is not None:
+                    change = float(data['change'])
+                else:
+                    change = price - prev_close
+                
+                if 'percent_change' in data and data['percent_change'] is not None:
+                    change_pct = float(data['percent_change'])
+                else:
+                    change_pct = (change / prev_close) * 100 if prev_close else 0
                 
                 result = {
                     'current_price': price,
                     'daily_change': change,
                     'daily_change_pct': change_pct,
-                    'open': float(data.get('open', 0)),
-                    'high': float(data.get('high', 0)),
-                    'low': float(data.get('low', 0)),
+                    'open': float(data.get('open', 0)) if data.get('open') else price,
+                    'high': float(data.get('high', 0)) if data.get('high') else price,
+                    'low': float(data.get('low', 0)) if data.get('low') else price,
                     'prev_close': prev_close,
                     'bid': price - 0.5,
                     'ask': price + 0.5,
@@ -58,19 +83,18 @@ def fetch_gold_usd() -> Optional[Dict]:
                     'source': 'twelvedata.com',
                     'symbol': 'XAU/USD',
                 }
-                logger.info(f"SUCCESS: Live gold ${price:.2f} (chg: {change:+.2f})")
+                logger.info(f"SUCCESS: Live gold ${price:.2f} (chg: {change:+.2f}, {change_pct:+.2f}%)")
                 return result
-            elif 'code' in data and data.get('status') == 'error':
-                logger.error(f"TwelveData API error: {data.get('message', data)}")
-                return None
             else:
-                logger.warning(f"TwelveData response missing 'price' field. Keys: {list(data.keys())}")
+                logger.warning(f"No price/close field found. Available keys: {list(data.keys())}")
                 return None
         else:
             logger.error(f"TwelveData HTTP {r.status_code}: {r.text[:300]}")
             return None
     except Exception as e:
         logger.error(f"TwelveData fetch exception: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         return None
 
 
