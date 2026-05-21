@@ -10,3 +10,4 @@ loguru>=0.7.2
 pytz>=2024.1
 sendgrid>=6.11.0
 flask>=3.0.0
+apscheduler>=3.10.4
