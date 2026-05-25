@@ -13,7 +13,6 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
 
 from app.twelvedata_fetcher import fetch_all_live
-from app.report_generator import ReportGenerator
 
 # AEST timezone
 AEST = pytz.timezone('Australia/Sydney')
@@ -72,13 +71,15 @@ def generate_and_save():
             return False
         
         indicators = recalculate_analysis(indicators)
-        generator = ReportGenerator()
-        html = generator.generate(indicators, {})
-        html = html.replace('Saturday, May 16, 2026', now_aest.strftime('%A, %B %d, %Y'))
         
-        old_footer = 'XAU/USD Daily Reporter | Auto-refreshes every hour'
-        new_footer = f'XAU/USD Daily Reporter | Last Updated: {now_aest.strftime("%a %d %b %H:%M")} AEST | LIVE | Source: twelvedata.com'
-        html = html.replace(old_footer, new_footer)
+        # ALWAYS use the dynamic batch report generator — never the old static template
+        from app.batch_report import generate_full_report
+        html = generate_full_report()
+        
+        if not html or len(html) < 1000:
+            logger.error("[HOURLY] Batch report failed, falling back to error page")
+            html = generate_error_page("Report generation failed")
+            return False
         
         os.makedirs(WEB_DIR, exist_ok=True)
         with open(os.path.join(WEB_DIR, 'index.html'), 'w', encoding='utf-8') as f:
