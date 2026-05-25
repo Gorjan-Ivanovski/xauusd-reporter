@@ -94,33 +94,38 @@ def generate_and_save():
 
 
 def generate_full_report_job():
-    """Daily 6 AM batch job — full report with complete analysis rewrite."""
+    """Daily 6 AM batch job — FULL analysis rewrite with fresh prices."""
     global last_full_report, latest_indicators, last_update
     
     now_aest = datetime.now(AEST)
     logger.info(f"[BATCH] === FULL DAILY REPORT START: {now_aest.strftime('%Y-%m-%d %H:%M')} AEST ===")
+    logger.info("[BATCH] Rewriting ALL analysis: macro, technical, events, trade plan...")
     
     try:
         from app.batch_report import generate_full_report
         
         html = generate_full_report()
         
-        if html:
+        if html and len(html) > 1000:
             os.makedirs(WEB_DIR, exist_ok=True)
             with open(os.path.join(WEB_DIR, 'index.html'), 'w', encoding='utf-8') as f:
                 f.write(html)
             
-            # Update state from the full report generation
+            # Re-fetch to update API state
             indicators = fetch_all_live()
             if indicators.get('source') == 'twelvedata.com':
                 latest_indicators = indicators
-            
-            last_full_report = now_aest.strftime('%Y-%m-%d %H:%M:%S AEST')
-            last_update = last_full_report
-            logger.info(f"[BATCH] === FULL REPORT COMPLETE at {last_full_report} ===")
-            return True
+                price = indicators.get('current_price', 0)
+                last_full_report = now_aest.strftime('%Y-%m-%d %H:%M:%S AEST')
+                last_update = last_full_report
+                logger.info(f"[BATCH] === FULL REPORT COMPLETE: ${price:.2f} at {last_full_report} ===")
+                return True
+            else:
+                logger.warning("[BATCH] Report written but follow-up fetch failed")
+                last_full_report = now_aest.strftime('%Y-%m-%d %H:%M:%S AEST')
+                return True
         else:
-            logger.error("[BATCH] Full report generation returned empty — API likely failed")
+            logger.error("[BATCH] Full report generation returned empty/invalid HTML")
             return False
             
     except Exception as e:
