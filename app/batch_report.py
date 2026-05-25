@@ -342,6 +342,7 @@ def _generate_event_html(events: list, trading: dict, now_aest: datetime) -> str
 
 def _build_complete_html(price, indicators, trading, exec_summary, macro, technical, trade_plan, event_html, now_aest) -> str:
     """Assemble the complete HTML report."""
+    generation_time = now_aest.strftime('%a %d %b %H:%M')
     change = indicators['daily_change']
     change_pct = indicators['daily_change_pct']
     dxy = indicators.get('dxy', 99.27)
@@ -369,11 +370,19 @@ def _build_complete_html(price, indicators, trading, exec_summary, macro, techni
     else:
         signal, signal_class = "NEUTRAL", "signal-neutral"
     
+    # Next trading day info for holidays
+    next_trading = ""
+    if trading['is_holiday'] or trading['is_weekend']:
+        next_day = now_aest + timedelta(days=1)
+        while next_day.weekday() >= 5 or is_us_market_holiday(next_day)[0]:
+            next_day += timedelta(days=1)
+        next_trading = f"Markets reopen {next_day.strftime('%A %d %B')} AEST"
+    
     # Holiday banner
     holiday_banner = ""
     if trading['is_holiday']:
         holiday_banner = f"""<div style="background:#3a1515;color:#ff6b6b;padding:12px;text-align:center;font-weight:bold;font-size:14px;margin:0">
-US MARKET HOLIDAY: {trading['holiday_name']} — Markets CLOSED
+US MARKET HOLIDAY: {trading['holiday_name']} — Markets CLOSED | {next_trading}
 </div>"""
     
     return f"""<!DOCTYPE html>
@@ -427,7 +436,7 @@ ul{{margin-left:20px;margin-bottom:12px}}li{{margin-bottom:6px;font-size:14px}}
 <div class="header">
 <h1>XAU/USD Daily Trading Report</h1>
 <div class="date">{now_aest.strftime('%A, %B %d, %Y')} AEST | {trading['date_us']} US</div>
-<div class="batch-badge">FULL DAILY REPORT — 6:00 AM AEST BATCH</div>
+<div class="batch-badge">FULL DAILY REPORT — Generated {generation_time} AEST</div>
 </div>
 
 <div class="price-bar">

@@ -297,6 +297,7 @@ def trigger_update():
 @app.route('/trigger-full-report')
 def trigger_full_report():
     """Manually trigger the full daily report generation."""
+    logger.info("[API] Manual full report triggered via /trigger-full-report")
     success = generate_full_report_job()
     return jsonify({
         'success': success,
@@ -304,6 +305,52 @@ def trigger_full_report():
         'source': latest_indicators.get('source', 'unknown'),
         'last_full_report': last_full_report,
         'last_update': last_update,
+    })
+
+
+@app.route('/debug')
+def debug():
+    """Debug endpoint — shows internal state and tries to fetch live data."""
+    from app.twelvedata_fetcher import get_api_key, fetch_gold_usd
+    
+    key = get_api_key()
+    test_result = None
+    
+    # Try to fetch live data right now
+    try:
+        test_result = fetch_gold_usd()
+    except Exception as e:
+        test_result = {'error': str(e)}
+    
+    # Check what's in the web directory
+    web_files = []
+    try:
+        web_files = os.listdir(WEB_DIR)
+    except:
+        pass
+    
+    # Check HTML size
+    html_size = 0
+    try:
+        html_size = os.path.getsize(os.path.join(WEB_DIR, 'index.html'))
+    except:
+        pass
+    
+    return jsonify({
+        'api_key_set': bool(key),
+        'api_key_preview': key[:8] + '...' if key else 'NOT SET',
+        'api_key_length': len(key),
+        'live_fetch_test': test_result,
+        'latest_indicators': {
+            'price': latest_indicators.get('current_price'),
+            'source': latest_indicators.get('source'),
+            'trend_bias': latest_indicators.get('trend_bias'),
+        },
+        'last_update': last_update,
+        'last_full_report': last_full_report,
+        'web_dir_files': web_files,
+        'html_size_bytes': html_size,
+        'server_time_aest': datetime.now(AEST).strftime('%Y-%m-%d %H:%M:%S'),
     })
 
 
